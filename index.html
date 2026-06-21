@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Reviewer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Code Review Agent</h1>
+                <p>Hindsight Memory Enabled</p>
+            </div>
+            <form action="/new_review" method="POST">
+                <button type="submit" class="btn-primary">+ New Review</button>
+            </form>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>{{ stats.total }}</h3>
+                <p>Total Reviews</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ stats.memory }}</h3>
+                <p>Learned Standards</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active</h3>
+                <p>Agent Status</p>
+            </div>
+        </div>
+
+        <section class="activity">
+            <h2>Recent Activity</h2>
+            {% for review in reviews %}
+            <div class="review-card">
+                <div class="card-header">
+                    <strong>{{ review.title }}</strong>
+                    <span class="badge">{{ review.status }}</span>
+                </div>
+                <p>{{ review.summary or "Awaiting analysis..." }}</p>
+            </div>
+            {% else %}
+            <div class="review-card">
+                <p>No activity found. Click "+ New Review" to start.</p>
+            </div>
+            {% endfor %}
+        </section>
+    </div>
+</body>
+</html>
